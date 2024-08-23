@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/splash': (context) => const SplashScreen(),
-        '/': (context) => RegistrationScreen(),
+        '/': (context) => const RegistrationScreen(),
       },
     );
   }

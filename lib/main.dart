@@ -1,3 +1,4 @@
+import 'package:blnk_mobile_task/presentation/screens/registration_screen.dart';
 import 'package:blnk_mobile_task/presentation/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
-        '/': (context) => const SplashScreen(),
+        '/splash': (context) => const SplashScreen(),
+        '/': (context) => RegistrationScreen(),
       },
     );
   }

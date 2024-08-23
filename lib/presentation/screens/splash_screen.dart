@@ -21,14 +21,14 @@ class SplashScreen extends StatelessWidget {
               top: 0,
               right: 0,
               child: Image.asset(
-                ImageConstant.splash_top,
+                ImageConstant.splashTop,
               ),
             ),
             Positioned(
               bottom: 0,
               left: 0,
               child: Image.asset(
-                ImageConstant.splash_bottom,
+                ImageConstant.splashBottom,
               ),
             ),
             Center(

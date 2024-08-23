@@ -1,13 +1,11 @@
+import 'package:blnk_mobile_task/business_logic/cubit/registration_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RegistrationStepper1 extends StatefulWidget {
-  const RegistrationStepper1({super.key});
+// ignore: must_be_immutable
+class RegistrationStepper1 extends StatelessWidget {
+  RegistrationStepper1({super.key});
 
-  @override
-  State<RegistrationStepper1> createState() => _RegistrationStepper1State();
-}
-
-class _RegistrationStepper1State extends State<RegistrationStepper1> {
   List<Map<String, dynamic>> textFormFields = [
     {
       "name": "First Name",
@@ -41,8 +39,12 @@ class _RegistrationStepper1State extends State<RegistrationStepper1> {
     },
   ];
 
+  RegistrationCubit? registrationCubit;
+
   @override
   Widget build(BuildContext context) {
+    registrationCubit = BlocProvider.of<RegistrationCubit>(context);
+
     return Expanded(
       child: SingleChildScrollView(
         child: Column(
@@ -96,10 +98,7 @@ class _RegistrationStepper1State extends State<RegistrationStepper1> {
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
-                if (textFormFields.every(
-                    (element) => element["key"].currentState!.validate())) {
-                  _submitForm();
-                }
+                registrationCubit?.stepper1Submitted(textFormFields);
               },
               style: ElevatedButton.styleFrom(
                   padding:
@@ -122,9 +121,5 @@ class _RegistrationStepper1State extends State<RegistrationStepper1> {
     );
 
     return emailRegex.hasMatch(email);
-  }
-
-  void _submitForm() async {
-    // Add the Google Sheets and Drive integration here
   }
 }

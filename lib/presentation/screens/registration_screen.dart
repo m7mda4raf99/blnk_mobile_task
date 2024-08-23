@@ -1,9 +1,11 @@
+import 'package:blnk_mobile_task/business_logic/cubit/registration_cubit.dart';
 import 'package:blnk_mobile_task/presentation/widgets/registration_stepper_1.dart';
 import 'package:blnk_mobile_task/presentation/widgets/registration_stepper_2.dart';
 import 'package:blnk_mobile_task/presentation/widgets/registration_stepper_3.dart';
 import 'package:flutter/material.dart';
 
 import 'package:blnk_mobile_task/presentation/widgets/stepper.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -37,15 +39,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              CustomStepper(activeStep),
-              activeStep == 0
-                  ? const RegistrationStepper1()
-                  : activeStep == 1
-                      ? const RegistrationStepper2()
-                      : const RegistrationStepper3()
-            ],
+          child: BlocBuilder<RegistrationCubit, RegistrationState>(
+            builder: (context, state) {
+              if (state is Stepper1Completed) {
+                activeStep++;
+              }
+
+              return Column(
+                children: [
+                  CustomStepper(activeStep),
+                  activeStep == 0
+                      ? RegistrationStepper1()
+                      : activeStep == 1
+                          ? const RegistrationStepper2()
+                          : const RegistrationStepper3()
+                ],
+              );
+            },
           ),
         ),
       ),

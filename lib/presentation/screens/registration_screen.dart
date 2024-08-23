@@ -1,4 +1,5 @@
 import 'package:blnk_mobile_task/business_logic/cubit/registration_cubit.dart';
+import 'package:blnk_mobile_task/presentation/widgets/app_bar.dart';
 import 'package:blnk_mobile_task/presentation/widgets/registration_stepper_1.dart';
 import 'package:blnk_mobile_task/presentation/widgets/registration_stepper_2.dart';
 import 'package:blnk_mobile_task/presentation/widgets/registration_stepper_3.dart';
@@ -35,38 +36,29 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
         return Scaffold(
           backgroundColor: Colors.white,
-          appBar: AppBar(
-            // toolbarHeight: 40,
-            backgroundColor: Colors.white,
-            leading: activeStep > 0
-                ? FloatingActionButton(
-                    elevation: 0,
-                    backgroundColor: Colors.transparent,
-                    onPressed: () {
-                      registrationCubit?.back();
-                    },
-                    child: const Icon(Icons.arrow_back_outlined),
-                  )
-                : const SizedBox(
-                    width: 15,
-                  ),
-            title: const Center(
-              child: Text('Create Account',
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24)),
-            ),
-            actions: const [SizedBox(width: 50)],
-          ),
           body: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: Column(
                 children: [
-                  CustomStepper(activeStep),
-                  activeStep == 0
-                      ? RegistrationStepper1()
-                      : activeStep == 1
-                          ? RegistrationStepper2()
-                          : const RegistrationStepper3()
+                  CustomAppBar(
+                      activeStep: activeStep,
+                      registrationCubit: registrationCubit!),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          CustomStepper(activeStep),
+                          activeStep == 0
+                              ? RegistrationStepper1()
+                              : activeStep == 1
+                                  ? RegistrationStepper2()
+                                  : const RegistrationStepper3()
+                        ],
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),

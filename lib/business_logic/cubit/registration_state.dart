@@ -6,3 +6,20 @@ sealed class RegistrationState {}
 final class RegistrationInitial extends RegistrationState {}
 
 final class Stepper1Completed extends RegistrationState {}
+
+final class Stepper1Error extends RegistrationState {
+  final List<Map<String, dynamic>> textFormFields;
+  Stepper1Error(this.textFormFields);
+}
+
+final class Stepper2Completed extends RegistrationState {}
+
+final class Stepper2Error extends RegistrationState {
+  final List<Map<String, dynamic>> textFormFields;
+  Stepper2Error(this.textFormFields);
+}
+
+final class StepperBack extends RegistrationState {
+  final User user;
+  StepperBack(this.user);
+}

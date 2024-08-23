@@ -23,6 +23,33 @@ class RegistrationCubit extends Cubit<RegistrationState> {
       user.email = textFormFields[4]["controller"].text;
 
       emit(Stepper1Completed());
+    } else {
+      emit(Stepper1Error(textFormFields));
     }
+  }
+
+  void stepper2Submitted(List<Map<String, dynamic>> textFormFields) {
+    emit(RegistrationInitial());
+
+    if (textFormFields
+        .every((element) => element["key"].currentState!.validate())) {
+      user.apartment = textFormFields[0]["controller"].text;
+      user.floor = textFormFields[1]["controller"].text;
+      user.building = textFormFields[2]["controller"].text;
+      user.streetName = textFormFields[3]["controller"].text;
+      user.area = textFormFields[4]["controller"].text;
+      user.city = textFormFields[5]["controller"].text;
+      user.landMark = textFormFields[6]["controller"].text;
+
+      print(user.toJson());
+
+      emit(Stepper2Completed());
+    } else {
+      emit(Stepper2Error(textFormFields));
+    }
+  }
+
+  void back() {
+    emit(StepperBack(user));
   }
 }

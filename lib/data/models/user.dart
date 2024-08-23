@@ -4,7 +4,13 @@ class User {
   String? mobileNumber;
   String? landline;
   String? email;
-  String? address;
+  String? apartment;
+  String? floor;
+  String? building;
+  String? streetName;
+  String? area;
+  String? city;
+  String? landMark;
   String? nationalIDFront;
   String? nationalIDBack;
 
@@ -16,7 +22,13 @@ class User {
     mobileNumber = json["mobile_number"];
     landline = json["landline"];
     email = json["email"];
-    address = json["address"];
+    apartment = json["apartment"];
+    floor = json["floor"];
+    building = json["building"];
+    streetName = json["street_name"];
+    area = json["area"];
+    city = json["city"];
+    landMark = json["land_mark"];
     nationalIDFront = json["national_id_front"];
     nationalIDBack = json["national_id_back"];
   }
@@ -29,7 +41,13 @@ class User {
     data["mobile_number"] = mobileNumber;
     data["landline"] = landline;
     data["email"] = email;
-    data["address"] = address;
+    data["apartment"] = apartment;
+    data["floor"] = floor;
+    data["building"] = building;
+    data["street_name"] = streetName;
+    data["area"] = area;
+    data["city"] = city;
+    data["land_mark"] = landMark;
     data["national_id_front"] = nationalIDFront;
     data["national_id_back"] = nationalIDBack;
 

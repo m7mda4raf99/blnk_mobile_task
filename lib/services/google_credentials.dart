@@ -5,9 +5,6 @@ import 'package:googleapis_auth/auth_io.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
-const _clientId =
-    '925630651091-8orn094rgthp7268t51rrkqhonebvnqa.apps.googleusercontent.com';
-const _clientSecret = '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';
 const _scopes = [
   ga.DriveApi.driveFileScope,
   sheets.SheetsApi.spreadsheetsScope
@@ -21,7 +18,9 @@ class GoogleCredentials {
 
     if (credentials.isEmpty) {
       var authClient = await clientViaUserConsent(
-        ClientId(_clientId, _clientSecret),
+        ClientId(
+            '925630651091-8orn094rgthp7268t51rrkqhonebvnqa.apps.googleusercontent.com',
+            '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'),
         _scopes,
         (url) {
           launchUrl(Uri.parse('$url&prompt=consent&access_type=offline'));

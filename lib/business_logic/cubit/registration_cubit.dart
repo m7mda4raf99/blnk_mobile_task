@@ -1,6 +1,7 @@
 import 'package:blnk_mobile_task/data/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 part 'registration_state.dart';
 
@@ -41,7 +42,7 @@ class RegistrationCubit extends Cubit<RegistrationState> {
       user.city = textFormFields[5]["controller"].text;
       user.landMark = textFormFields[6]["controller"].text;
 
-      emit(Stepper2Completed());
+      emit(Stepper2Completed(textFormFields));
     } else {
       emit(Stepper2Error(textFormFields));
     }
@@ -49,6 +50,39 @@ class RegistrationCubit extends Cubit<RegistrationState> {
 
   void back() {
     emit(StepperBack(user));
+  }
+
+  void uploadNationalIDFront(XFile? file) {
+    emit(RegistrationInitial());
+    user.nationalIDFront = file;
+    emit(NationalIDFrontUploaded());
+  }
+
+  void uploadNationalIDBack(XFile? file) {
+    emit(RegistrationInitial());
+    user.nationalIDBack = file;
+
+    List<Map<String, dynamic>> userProfile = [
+      {
+        "value": ["${user.firstName} ${user.lastName}"],
+      },
+      {
+        "value": [user.mobileNumber],
+      },
+      {
+        "value": [user.email],
+      },
+      {
+        "value": [
+          "${user.building} ${user.streetName}, ${user.area}, ${user.city}, Floor ${user.floor}, Apartment ${user.apartment}, Landmark ${user.landMark}"
+        ],
+      },
+      {
+        "value": [user.nationalIDFront!.path, user.nationalIDBack!.path],
+      },
+    ];
+
+    emit(NationalIDBackUploaded(userProfile));
   }
 
   void stepper3Submitted(List<Map<String, dynamic>> textFormFields) {

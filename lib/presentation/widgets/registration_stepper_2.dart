@@ -89,6 +89,21 @@ class RegistrationStepper2 extends StatelessWidget {
           textFormFields[4]["controller"].text = state.user.area;
           textFormFields[5]["controller"].text = state.user.city;
           textFormFields[6]["controller"].text = state.user.landMark;
+        } else if (state is Stepper2Completed) {
+          textFormFields[0]["controller"].text =
+              state.textFormFields[0]["controller"].text;
+          textFormFields[1]["controller"].text =
+              state.textFormFields[1]["controller"].text;
+          textFormFields[2]["controller"].text =
+              state.textFormFields[2]["controller"].text;
+          textFormFields[3]["controller"].text =
+              state.textFormFields[3]["controller"].text;
+          textFormFields[4]["controller"].text =
+              state.textFormFields[4]["controller"].text;
+          textFormFields[5]["controller"].text =
+              state.textFormFields[5]["controller"].text;
+          textFormFields[6]["controller"].text =
+              state.textFormFields[6]["controller"].text;
         }
 
         return Expanded(

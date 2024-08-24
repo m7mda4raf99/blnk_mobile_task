@@ -12,11 +12,21 @@ final class Stepper1Error extends RegistrationState {
   Stepper1Error(this.textFormFields);
 }
 
-final class Stepper2Completed extends RegistrationState {}
+final class Stepper2Completed extends RegistrationState {
+  final List<Map<String, dynamic>> textFormFields;
+  Stepper2Completed(this.textFormFields);
+}
 
 final class Stepper2Error extends RegistrationState {
   final List<Map<String, dynamic>> textFormFields;
   Stepper2Error(this.textFormFields);
+}
+
+final class NationalIDFrontUploaded extends RegistrationState {}
+
+final class NationalIDBackUploaded extends RegistrationState {
+  final List<Map<String, dynamic>> userProfile;
+  NationalIDBackUploaded(this.userProfile);
 }
 
 final class Stepper3Completed extends RegistrationState {}

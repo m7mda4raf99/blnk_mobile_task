@@ -7,6 +7,7 @@ class CustomDropdownField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
+      isExpanded: true,
       value: field["controller"].text != '' ? field["controller"].text : null,
       key: field["key"],
       items: (field["items"] as List<String>).map((String value) {

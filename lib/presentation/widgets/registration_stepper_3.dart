@@ -42,32 +42,42 @@ class RegistrationStepper3 extends StatelessWidget {
   Widget build(BuildContext context) {
     registrationCubit = BlocProvider.of<RegistrationCubit>(context);
 
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            for (var userProfile in userProfile)
-              Column(
-                children: [
-                  ViewUserData(userProfile: userProfile),
-                  const SizedBox(height: 20),
-                ],
-              ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                registrationCubit?.stepper3Submitted(userProfile);
-              },
-              style: ElevatedButton.styleFrom(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 100, vertical: 12),
-                  backgroundColor: const Color(0xFF217FEB),
-                  foregroundColor: Colors.white),
-              child: const Text('Submit'),
+    return BlocBuilder<RegistrationCubit, RegistrationState>(
+      builder: (context, state) {
+        if (state is NationalIDBackUploaded) {
+          for (var i = 0; i < userProfile.length; i++) {
+            userProfile[i]["value"] = state.userProfile[i]["value"];
+          }
+        }
+
+        return Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                for (var userProfile in userProfile)
+                  Column(
+                    children: [
+                      ViewUserData(userProfile: userProfile),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    registrationCubit?.stepper3Submitted(userProfile);
+                  },
+                  style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 100, vertical: 12),
+                      backgroundColor: const Color(0xFF217FEB),
+                      foregroundColor: Colors.white),
+                  child: const Text('Submit'),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

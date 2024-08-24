@@ -1,3 +1,5 @@
+import 'package:image_picker/image_picker.dart';
+
 class User {
   String? firstName;
   String? lastName;
@@ -11,8 +13,8 @@ class User {
   String? area;
   String? city;
   String? landMark;
-  String? nationalIDFront;
-  String? nationalIDBack;
+  XFile? nationalIDFront;
+  XFile? nationalIDBack;
 
   User();
 

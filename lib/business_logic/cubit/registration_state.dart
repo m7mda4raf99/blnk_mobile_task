@@ -19,6 +19,8 @@ final class Stepper2Error extends RegistrationState {
   Stepper2Error(this.textFormFields);
 }
 
+final class Stepper3Completed extends RegistrationState {}
+
 final class StepperBack extends RegistrationState {
   final User user;
   StepperBack(this.user);

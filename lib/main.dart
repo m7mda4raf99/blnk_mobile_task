@@ -1,4 +1,5 @@
 import 'package:blnk_mobile_task/business_logic/cubit/registration_cubit.dart';
+import 'package:blnk_mobile_task/presentation/screens/registration_complete_screen.dart';
 import 'package:blnk_mobile_task/presentation/screens/registration_screen.dart';
 import 'package:blnk_mobile_task/presentation/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,8 @@ class MyApp extends StatelessWidget {
               create: (context) => RegistrationCubit(),
               child: const RegistrationScreen(),
             ),
+        '/registration-complete': (context) =>
+            const RegistrationCompleteScreen(),
       },
     );
   }

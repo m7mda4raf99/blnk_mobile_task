@@ -16,7 +16,7 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  int activeStep = 0;
+  int activeStep = 2;
 
   RegistrationCubit? registrationCubit;
 
@@ -30,6 +30,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           activeStep++;
         } else if (state is Stepper2Completed) {
           activeStep++;
+        } else if (state is Stepper3Completed) {
+          Navigator.pushNamed(context, '/registration-complete');
         } else if (state is StepperBack) {
           activeStep--;
         }
@@ -54,7 +56,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               ? RegistrationStepper1()
                               : activeStep == 1
                                   ? RegistrationStepper2()
-                                  : const RegistrationStepper3()
+                                  : RegistrationStepper3()
                         ],
                       ),
                     ),

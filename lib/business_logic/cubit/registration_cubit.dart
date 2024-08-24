@@ -41,8 +41,6 @@ class RegistrationCubit extends Cubit<RegistrationState> {
       user.city = textFormFields[5]["controller"].text;
       user.landMark = textFormFields[6]["controller"].text;
 
-      print(user.toJson());
-
       emit(Stepper2Completed());
     } else {
       emit(Stepper2Error(textFormFields));
@@ -51,5 +49,13 @@ class RegistrationCubit extends Cubit<RegistrationState> {
 
   void back() {
     emit(StepperBack(user));
+  }
+
+  void stepper3Submitted(List<Map<String, dynamic>> textFormFields) {
+    emit(RegistrationInitial());
+
+    // call repository and api
+
+    emit(Stepper3Completed());
   }
 }

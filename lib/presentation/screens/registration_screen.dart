@@ -9,6 +9,7 @@ import 'package:blnk_mobile_task/presentation/widgets/stepper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edge_detection/edge_detection.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:motion_toast/motion_toast.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -29,28 +30,41 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     registrationCubit = BlocProvider.of<RegistrationCubit>(context);
 
-    return BlocBuilder<RegistrationCubit, RegistrationState>(
-      builder: (context, state) {
-        if (state is Stepper1Completed) {
-          activeStep++;
-        } else if (state is Stepper2Completed) {
-          getNationalIDFrontFromCamera();
-        } else if (state is NationalIDFrontUploaded) {
-          getNationalIDBackFromCamera();
-        } else if (state is NationalIDBackUploaded) {
-          activeStep++;
-        } else if (state is Stepper3Completed) {
-          Navigator.pushNamed(context, '/registration-complete');
-        } else if (state is StepperBack) {
-          activeStep--;
-        }
-
-        return Scaffold(
-          backgroundColor: Colors.white,
-          body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Column(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: BlocConsumer<RegistrationCubit, RegistrationState>(
+            listener: (context, state) {
+              if (state is Stepper1Completed) {
+                activeStep++;
+              } else if (state is Stepper1Error) {
+              } else if (state is Stepper2Completed) {
+                getNationalIDFrontFromCamera();
+              } else if (state is Stepper2Error) {
+              } else if (state is NationalIDFrontUploaded) {
+                getNationalIDBackFromCamera();
+              } else if (state is NationalIDBackUploaded) {
+                activeStep++;
+              } else if (state is Stepper3Completed) {
+                Navigator.pushNamed(context, '/registration-complete');
+              } else if (state is Stepper3Error) {
+                MotionToast.error(
+                  title: const Text(
+                    'Error',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  description: Text(
+                    state.errorMessage,
+                  ),
+                ).show(context);
+              } else if (state is StepperBack) {
+                activeStep--;
+              }
+            },
+            builder: (context, state) {
+              return Column(
                 children: [
                   CustomAppBar(
                       activeStep: activeStep,
@@ -71,11 +85,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                   )
                 ],
-              ),
-            ),
+              );
+            },
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 

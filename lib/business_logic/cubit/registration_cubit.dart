@@ -1,4 +1,5 @@
 import 'package:blnk_mobile_task/data/models/user.dart';
+import 'package:blnk_mobile_task/data/repository/registration_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -6,9 +7,34 @@ import 'package:image_picker/image_picker.dart';
 part 'registration_state.dart';
 
 class RegistrationCubit extends Cubit<RegistrationState> {
-  RegistrationCubit() : super(RegistrationInitial());
+  final RegistrationRepository registrationRepository;
+  RegistrationCubit(this.registrationRepository) : super(RegistrationInitial());
 
   late User user;
+
+  List<Map<String, dynamic>> getUserProfile() {
+    List<Map<String, dynamic>> userProfile = [
+      {
+        "value": ["${user.firstName} ${user.lastName}"],
+      },
+      {
+        "value": [user.mobileNumber, user.landline],
+      },
+      {
+        "value": [user.email],
+      },
+      {
+        "value": [
+          "${user.building} ${user.streetName}, ${user.area}, ${user.city}, Floor ${user.floor}, Apartment ${user.apartment}, Landmark ${user.landMark}"
+        ],
+      },
+      {
+        "value": [user.nationalIDFront!.path, user.nationalIDBack!.path],
+      },
+    ];
+
+    return userProfile;
+  }
 
   void stepper1Submitted(List<Map<String, dynamic>> textFormFields) {
     emit(RegistrationInitial());
@@ -62,34 +88,35 @@ class RegistrationCubit extends Cubit<RegistrationState> {
     emit(RegistrationInitial());
     user.nationalIDBack = file;
 
-    List<Map<String, dynamic>> userProfile = [
-      {
-        "value": ["${user.firstName} ${user.lastName}"],
-      },
-      {
-        "value": [user.mobileNumber],
-      },
-      {
-        "value": [user.email],
-      },
-      {
-        "value": [
-          "${user.building} ${user.streetName}, ${user.area}, ${user.city}, Floor ${user.floor}, Apartment ${user.apartment}, Landmark ${user.landMark}"
-        ],
-      },
-      {
-        "value": [user.nationalIDFront!.path, user.nationalIDBack!.path],
-      },
-    ];
-
-    emit(NationalIDBackUploaded(userProfile));
+    emit(NationalIDBackUploaded(getUserProfile()));
   }
 
-  void stepper3Submitted(List<Map<String, dynamic>> textFormFields) {
+  void stepper3Submitted() async {
     emit(RegistrationInitial());
 
-    // call repository and api
+    Map<String, dynamic> drive = await registrationRepository.uploadToDrive(
+        user.nationalIDFront!.path, user.nationalIDBack!.path);
 
-    emit(Stepper3Completed());
+    if (drive["nationalIDFront"] != 'Error' &&
+        drive["nationalIDBack"] != 'Error') {
+      String spreadSheet = await registrationRepository.uploadToSpreadSheet([
+        "${user.firstName} ${user.lastName}",
+        user.mobileNumber!,
+        user.landline!,
+        user.email!,
+        "${user.building} ${user.streetName}, ${user.area}, ${user.city}, Floor ${user.floor}, Apartment ${user.apartment}, Landmark ${user.landMark}",
+        drive["nationalIDFront"],
+        drive["nationalIDBack"]
+      ]);
+
+      if (spreadSheet == 'User Registered Successfully') {
+        emit(Stepper3Completed());
+      } else {
+        emit(Stepper3Error('Error uploading user information to spreadsheet.',
+            getUserProfile()));
+      }
+    } else {
+      emit(Stepper3Error('Error uploading images to drive.', getUserProfile()));
+    }
   }
 }

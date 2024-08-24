@@ -97,8 +97,13 @@ class RegistrationCubit extends Cubit<RegistrationState> {
     Map<String, dynamic> drive = await registrationRepository.uploadToDrive(
         user.nationalIDFront!.path, user.nationalIDBack!.path);
 
-    if (drive["nationalIDFront"] != 'Error' &&
-        drive["nationalIDBack"] != 'Error') {
+    String error = drive["nationalIDFront"].toString().startsWith('Error')
+        ? drive["nationalIDFront"]
+        : drive["nationalIDBack"].toString().startsWith('Error')
+            ? drive["nationalIDBack"]
+            : 'Success';
+
+    if (error == 'Success') {
       String spreadSheet = await registrationRepository.uploadToSpreadSheet([
         "${user.firstName} ${user.lastName}",
         user.mobileNumber!,
@@ -116,7 +121,8 @@ class RegistrationCubit extends Cubit<RegistrationState> {
             getUserProfile()));
       }
     } else {
-      emit(Stepper3Error('Error uploading images to drive.', getUserProfile()));
+      emit(Stepper3Error(
+          'Error uploading images to drive: $error', getUserProfile()));
     }
   }
 }

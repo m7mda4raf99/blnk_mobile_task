@@ -16,7 +16,7 @@ class GoogleDrive {
 
       return response.toJson()['name'];
     } catch (e) {
-      return 'Error';
+      return 'Error $e';
     }
   }
 }

@@ -3,14 +3,12 @@ import 'package:blnk_mobile_task/presentation/widgets/view_user_data.dart';
 import 'package:blnk_mobile_task/utils/image_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 
 // ignore: must_be_immutable
 class RegistrationStepper3 extends StatelessWidget {
   RegistrationStepper3({super.key});
 
-  final RoundedLoadingButtonController _btnController =
-      RoundedLoadingButtonController();
+  bool _isLoading = false;
 
   List<Map<String, dynamic>> userProfile = [
     {
@@ -52,10 +50,16 @@ class RegistrationStepper3 extends StatelessWidget {
           for (var i = 0; i < userProfile.length; i++) {
             userProfile[i]["value"] = state.userProfile[i]["value"];
           }
+        } else if (state is Stepper3Loading) {
+          _isLoading = true;
+
+          for (var i = 0; i < userProfile.length; i++) {
+            userProfile[i]["value"] = state.userProfile[i]["value"];
+          }
         } else if (state is Stepper3Completed) {
-          _btnController.reset();
+          _isLoading = false;
         } else if (state is Stepper3Error) {
-          _btnController.reset();
+          _isLoading = false;
 
           for (var i = 0; i < userProfile.length; i++) {
             userProfile[i]["value"] = state.userProfile[i]["value"];
@@ -74,14 +78,17 @@ class RegistrationStepper3 extends StatelessWidget {
                     ],
                   ),
                 const SizedBox(height: 10),
-                RoundedLoadingButton(
-                  controller: _btnController,
+                ElevatedButton(
                   onPressed: () {
                     registrationCubit?.stepper3Submitted();
                   },
-                  child: const Text('Submit',
-                      style: TextStyle(color: Colors.white)),
-                )
+                  style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 100, vertical: 12),
+                      backgroundColor: const Color(0xFF217FEB),
+                      foregroundColor: Colors.white),
+                  child: Text(_isLoading ? 'Loading... ' : 'Submit'),
+                ),
               ],
             ),
           ),

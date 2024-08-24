@@ -29,6 +29,11 @@ final class NationalIDBackUploaded extends RegistrationState {
   NationalIDBackUploaded(this.userProfile);
 }
 
+final class Stepper3Loading extends RegistrationState {
+  final List<Map<String, dynamic>> userProfile;
+  Stepper3Loading(this.userProfile);
+}
+
 final class Stepper3Completed extends RegistrationState {}
 
 final class Stepper3Error extends RegistrationState {

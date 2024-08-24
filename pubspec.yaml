@@ -27,7 +27,6 @@ dependencies:
   flutter_secure_storage: ^9.2.2
   loading_animation_widget: ^1.2.1
   motion_toast: ^2.11.0
-  rounded_loading_button_plus: ^3.0.1
 
 dev_dependencies:
   flutter_test:

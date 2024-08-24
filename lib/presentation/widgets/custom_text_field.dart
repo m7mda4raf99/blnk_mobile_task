@@ -8,6 +8,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: field["type"],
       key: field["key"],
       focusNode: field["focusNode"],
       onTapOutside: (text) {
@@ -40,6 +41,12 @@ class CustomTextField extends StatelessWidget {
       },
       onChanged: (_) {
         field["key"].currentState!.validate();
+      },
+      onSaved: (_) {
+        field["next"]!.requestFocus();
+      },
+      onFieldSubmitted: (_) {
+        field["next"]!.requestFocus();
       },
     );
   }

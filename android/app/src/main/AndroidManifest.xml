@@ -4,7 +4,7 @@
     <uses-feature android:name="android.hardware.camera" />
     
     <application
-        android:label="BLNK Mobile Task"
+        android:label="BLNK Task"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

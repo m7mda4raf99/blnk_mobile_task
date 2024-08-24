@@ -13,25 +13,29 @@ class RegistrationStepper2 extends StatelessWidget {
       "name": "Apartment",
       "controller": TextEditingController(),
       "focusNode": FocusNode(),
-      "key": GlobalKey<FormFieldState>()
+      "key": GlobalKey<FormFieldState>(),
+      "type": TextInputType.number
     },
     {
       "name": "Floor",
       "controller": TextEditingController(),
       "focusNode": FocusNode(),
-      "key": GlobalKey<FormFieldState>()
+      "key": GlobalKey<FormFieldState>(),
+      "type": TextInputType.number
     },
     {
       "name": "Building",
       "controller": TextEditingController(),
       "focusNode": FocusNode(),
-      "key": GlobalKey<FormFieldState>()
+      "key": GlobalKey<FormFieldState>(),
+      "type": TextInputType.number
     },
     {
       "name": "Street Name",
       "controller": TextEditingController(),
       "focusNode": FocusNode(),
-      "key": GlobalKey<FormFieldState>()
+      "key": GlobalKey<FormFieldState>(),
+      "type": TextInputType.text
     },
     {
       "name": "Area",
@@ -67,7 +71,8 @@ class RegistrationStepper2 extends StatelessWidget {
       "name": "Land Mark",
       "controller": TextEditingController(),
       "focusNode": FocusNode(),
-      "key": GlobalKey<FormFieldState>()
+      "key": GlobalKey<FormFieldState>(),
+      "type": TextInputType.text
     },
   ];
 
@@ -75,6 +80,10 @@ class RegistrationStepper2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    for (var i = 0; i < 3; i++) {
+      textFormFields[i]["next"] = textFormFields[i + 1]["focusNode"];
+    }
+
     registrationCubit = BlocProvider.of<RegistrationCubit>(context);
 
     return BlocBuilder<RegistrationCubit, RegistrationState>(

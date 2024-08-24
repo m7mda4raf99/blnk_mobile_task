@@ -21,10 +21,10 @@ class CustomAppBar extends StatelessWidget {
                 },
                 child: const Icon(Icons.arrow_back_outlined),
               )
-            : const SizedBox(width: 50),
+            : const SizedBox(width: 55, height: 55),
         const Text('Create Account',
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24)),
-        const SizedBox(width: 50)
+        const SizedBox(width: 55, height: 55),
       ],
     );
   }

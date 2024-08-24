@@ -53,10 +53,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 MotionToast.error(
                   title: const Text(
                     'Error',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
                   ),
                   description: Text(
                     state.errorMessage,
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ).show(context);
               } else if (state is StepperBack) {
@@ -109,6 +111,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     try {
       await EdgeDetection.detectEdge(
+        canUseGallery: false,
         imagePath,
         androidScanTitle: 'Scan National ID (Front)',
         androidCropTitle: 'Crop National ID (Front)',
@@ -137,6 +140,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     try {
       await EdgeDetection.detectEdge(
+        canUseGallery: false,
         imagePath,
         androidScanTitle: 'Scan National ID (Back)',
         androidCropTitle: 'Crop National ID (Back)',

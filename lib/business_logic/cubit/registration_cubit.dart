@@ -92,7 +92,7 @@ class RegistrationCubit extends Cubit<RegistrationState> {
   }
 
   void stepper3Submitted() async {
-    emit(RegistrationInitial());
+    emit(Stepper3Loading(getUserProfile()));
 
     Map<String, dynamic> drive = await registrationRepository.uploadToDrive(
         user.nationalIDFront!.path, user.nationalIDBack!.path);

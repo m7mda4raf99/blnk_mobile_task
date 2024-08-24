@@ -6,7 +6,6 @@ class SecureStorage {
 
   //Save Credentials
   Future saveCredentials(AccessToken token, String refreshToken) async {
-    print(token.expiry.toIso8601String());
     await storage.write(key: "type", value: token.type);
     await storage.write(key: "data", value: token.data);
     await storage.write(key: "expiry", value: token.expiry.toString());

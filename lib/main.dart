@@ -4,6 +4,7 @@ import 'package:blnk_mobile_task/data/repository/registration_repository.dart';
 import 'package:blnk_mobile_task/presentation/screens/registration_complete_screen.dart';
 import 'package:blnk_mobile_task/presentation/screens/registration_screen.dart';
 import 'package:blnk_mobile_task/presentation/screens/splash_screen.dart';
+import 'package:blnk_mobile_task/services/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,6 +19,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SecureStorage storage = SecureStorage();
+    storage.clear();
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'BLNK Mobile Task',
@@ -27,13 +31,11 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/splash': (context) => const SplashScreen(),
-        // '/registration'
-        '/': (context) => BlocProvider(
+        '/registration': (context) => BlocProvider(
               create: (context) =>
                   RegistrationCubit(RegistrationRepository(RegistrationApi())),
               child: const RegistrationScreen(),
             ),
-        // '/registration-complete'
         '/registration-complete': (context) =>
             const RegistrationCompleteScreen(),
       },

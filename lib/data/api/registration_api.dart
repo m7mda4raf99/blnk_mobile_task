@@ -10,8 +10,10 @@ class RegistrationApi {
     File nationalIDFront = File(nationalIDFrontPath);
     File nationalIDBack = File(nationalIDBackPath);
 
-    String nationalIDFrontName = await googleDrive.upload(nationalIDFront);
-    String nationalIDBackName = await googleDrive.upload(nationalIDBack);
+    String nationalIDFrontName =
+        await googleDrive.upload('national-id-front', nationalIDFront);
+    String nationalIDBackName =
+        await googleDrive.upload('national-id-back', nationalIDBack);
 
     return {
       "nationalIDFront": nationalIDFrontName,

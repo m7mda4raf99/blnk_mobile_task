@@ -3,16 +3,13 @@ import 'package:blnk_mobile_task/presentation/widgets/app_bar.dart';
 import 'package:blnk_mobile_task/presentation/widgets/registration_stepper_1.dart';
 import 'package:blnk_mobile_task/presentation/widgets/registration_stepper_2.dart';
 import 'package:blnk_mobile_task/presentation/widgets/registration_stepper_3.dart';
+import 'package:blnk_mobile_task/services/edge_detector.dart';
 import 'package:flutter/material.dart';
 
 import 'package:blnk_mobile_task/presentation/widgets/stepper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:edge_detection/edge_detection.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:motion_toast/motion_toast.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -96,60 +93,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   Future<void> getNationalIDFrontFromCamera() async {
-    bool isCameraGranted = await Permission.camera.request().isGranted;
-    if (!isCameraGranted) {
-      isCameraGranted =
-          await Permission.camera.request() == PermissionStatus.granted;
-    }
+    EdgeDetector edgeDetector = EdgeDetector();
+    String imagePath = await edgeDetector.detect('National ID (Front)');
 
-    if (!isCameraGranted) {
-      return;
-    }
-
-    String imagePath = join((await getApplicationSupportDirectory()).path,
-        "${(DateTime.now().millisecondsSinceEpoch / 1000).round()}.jpeg");
-
-    try {
-      await EdgeDetection.detectEdge(
-        canUseGallery: false,
-        imagePath,
-        androidScanTitle: 'Scan National ID (Front)',
-        androidCropTitle: 'Crop National ID (Front)',
-        androidCropBlackWhiteTitle: 'Black White',
-        androidCropReset: 'Reset',
-      );
+    if (imagePath != 'Error') {
       XFile? file = XFile(imagePath);
       registrationCubit?.uploadNationalIDFront(file);
-      // ignore: empty_catches
-    } catch (e) {}
+    }
   }
 
   Future<void> getNationalIDBackFromCamera() async {
-    bool isCameraGranted = await Permission.camera.request().isGranted;
-    if (!isCameraGranted) {
-      isCameraGranted =
-          await Permission.camera.request() == PermissionStatus.granted;
-    }
+    EdgeDetector edgeDetector = EdgeDetector();
+    String imagePath = await edgeDetector.detect('National ID (Back)');
 
-    if (!isCameraGranted) {
-      return;
-    }
-
-    String imagePath = join((await getApplicationSupportDirectory()).path,
-        "${(DateTime.now().millisecondsSinceEpoch / 1000).round()}.jpeg");
-
-    try {
-      await EdgeDetection.detectEdge(
-        canUseGallery: false,
-        imagePath,
-        androidScanTitle: 'Scan National ID (Back)',
-        androidCropTitle: 'Crop National ID (Back)',
-        androidCropBlackWhiteTitle: 'Black White',
-        androidCropReset: 'Reset',
-      );
+    if (imagePath != 'Error') {
       XFile? file = XFile(imagePath);
       registrationCubit?.uploadNationalIDBack(file);
-      // ignore: empty_catches
-    } catch (e) {}
+    }
   }
 }

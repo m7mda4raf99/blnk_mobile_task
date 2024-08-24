@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
-        '/splash': (context) => const SplashScreen(),
+        '/': (context) => const SplashScreen(),
         '/registration': (context) => BlocProvider(
               create: (context) =>
                   RegistrationCubit(RegistrationRepository(RegistrationApi())),

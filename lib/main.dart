@@ -22,12 +22,13 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/splash': (context) => const SplashScreen(),
-        '/': (context) => BlocProvider(
+        // '/registration'
+        '/registration': (context) => BlocProvider(
               create: (context) => RegistrationCubit(),
               child: const RegistrationScreen(),
             ),
-        '/registration-complete': (context) =>
-            const RegistrationCompleteScreen(),
+        // '/registration-complete'
+        '/': (context) => const RegistrationCompleteScreen(),
       },
     );
   }

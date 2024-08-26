@@ -43,10 +43,14 @@ class CustomTextField extends StatelessWidget {
         field["key"].currentState!.validate();
       },
       onSaved: (_) {
-        field["next"]!.requestFocus();
+        if (field["next"] != null) {
+          field["next"]!.requestFocus();
+        }
       },
       onFieldSubmitted: (_) {
-        field["next"]!.requestFocus();
+        if (field["next"] != null) {
+          field["next"]!.requestFocus();
+        }
       },
     );
   }

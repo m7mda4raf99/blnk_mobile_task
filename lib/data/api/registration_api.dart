@@ -5,15 +5,15 @@ import 'package:blnk_mobile_task/services/google_spreadsheet.dart';
 class RegistrationApi {
   Future<Map<String, dynamic>> uploadToDrive(
       String nationalIDFrontPath, String nationalIDBackPath) async {
-    final GoogleDrive googleDrive = GoogleDrive();
-
     File nationalIDFront = File(nationalIDFrontPath);
     File nationalIDBack = File(nationalIDBackPath);
 
+    final GoogleDrive uploadDrive = GoogleDrive();
+
     String nationalIDFrontName =
-        await googleDrive.upload('national-id-front', nationalIDFront);
+        await uploadDrive.upload(nationalIDFront, 'national-id-front');
     String nationalIDBackName =
-        await googleDrive.upload('national-id-back', nationalIDBack);
+        await uploadDrive.upload(nationalIDBack, 'national-id-back');
 
     return {
       "nationalIDFront": nationalIDFrontName,
@@ -22,7 +22,7 @@ class RegistrationApi {
   }
 
   Future<dynamic> uploadToSpreadSheet(List<String> row) async {
-    final GoogleSpreadSheet googleSpreadSheet = GoogleSpreadSheet();
+    final GoogleSpreadsheet googleSpreadSheet = GoogleSpreadsheet();
 
     return await googleSpreadSheet.insertRow(row);
   }

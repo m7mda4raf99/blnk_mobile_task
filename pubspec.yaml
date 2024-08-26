@@ -23,9 +23,10 @@ dependencies:
   googleapis: ^13.2.0
   googleapis_auth: ^1.6.0
   http: ^1.2.2
-  url_launcher: ^6.3.0
-  flutter_secure_storage: ^9.2.2
   motion_toast: ^2.11.0
+  firebase_auth: ^4.17.9
+  firebase_core: ^2.27.1
+  google_sign_in: ^6.2.1
 
 dev_dependencies:
   flutter_test:

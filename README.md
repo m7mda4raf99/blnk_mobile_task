@@ -2,6 +2,17 @@
 
 A cross-platform mobile application developed using Flutter and Dart. This application is designed to collect basic user information, scan and process images of a national ID, and store the data securely on Google Drive and Google Sheets.
 
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Project Architecture](#project-architecture)
+4. [State Management](#state-management)
+5. [External Integrations](#external-integrations)
+6. [Installation and Setup](#installation-and-setup)
+7. [How to Use](#how-to-use)
+8. [Project Structure](#project-structure)
+
 ## Overview
 
 This project demonstrates the implementation of a cross-platform mobile application as per the requirements provided. The app collects user data, scans national ID cards, processes images to extract the ID card from photos, and stores the information in a Google Sheet, with images saved in a Google Drive folder.
